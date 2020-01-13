@@ -29,7 +29,7 @@ for byte_block in iter(lambda: file.read(4096), b""):
 checksum = sha256_hash.hexdigest()
 print("sha256 checksum = " + checksum)
 
-conn = http.client.HTTPSConnection("athena-build-uploader.thoys.nl:443")
+conn = http.client.HTTPSConnection("build-uploader.projectathena.io:443")
 
 context = json.loads(os.environ['GITHUB_CONTEXT'])
 
