@@ -30,6 +30,8 @@ jobs:
         echo "GITHUB_REF = ${GITHUB_REF}"
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
+        echo "GITHUB event json:"
+        cat ${GITHUB_EVENT_PATH}
     - name: Publish build action
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
