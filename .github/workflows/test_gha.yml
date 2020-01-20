@@ -17,6 +17,13 @@ jobs:
         python-version: 3.8.0
     - uses: actions/checkout@v1
     - name: Run a multi-line script
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+
       run: |
         echo Add other actions to build, and another one,
         echo test, and deploy your project.
@@ -30,6 +37,13 @@ jobs:
         echo "GITHUB_REF = ${GITHUB_REF}"
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
+        echo "JOB_CONTEXT = ${JOB_CONTEXT}"
+        echo "STEPS_CONTEXT = ${STEPS_CONTEXT}"
+        echo "RUNNER_CONTEXT = ${RUNNER_CONTEXT}"
+        echo "STRATEGY_CONTEXT = ${STRATEGY_CONTEXT}"
+        echo "MATRIX_CONTEXT = ${MATRIX_CONTEXT}"
+
+        echo ""
         echo "GITHUB event json:"
         cat ${GITHUB_EVENT_PATH}
     - name: Publish build action
