@@ -5,6 +5,7 @@ import json
 from hashlib import sha256
 
 MEGABYTES_TO_BYTES = 1024 * 1024
+FILE_READ_BUFFER = 4096
 
 def generate_file(filename, sizeInMegabytes):
     f = open(filename, "wb")
@@ -20,9 +21,9 @@ generate_file(temp_filename, 100)
 file = open(temp_filename, 'rb')
 file_contents = file.read()
 sha256_hash = sha256()
-# Read and update hash string value in blocks of 4K
+
 file.seek(0, 0)
-for byte_block in iter(lambda: file.read(4096), b""):
+for byte_block in iter(lambda: file.read(FILE_READ_BUFFER), b""):
     sha256_hash.update(byte_block)
 
 
