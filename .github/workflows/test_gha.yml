@@ -42,7 +42,6 @@ jobs:
         echo "RUNNER_CONTEXT = ${RUNNER_CONTEXT}"
         echo "STRATEGY_CONTEXT = ${STRATEGY_CONTEXT}"
         echo "MATRIX_CONTEXT = ${MATRIX_CONTEXT}"
-
         echo ""
         echo "GITHUB event json:"
         cat ${GITHUB_EVENT_PATH}
