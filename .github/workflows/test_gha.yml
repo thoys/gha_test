@@ -4,35 +4,88 @@ on:
  pull_request:
   types: [opened, synchronize, reopened, labeled]
 
+env:
+  RELEASE_NUMBER: ${{ github.event.number }}
+
 jobs:
-  build:
-
+  build_ubuntu:
     runs-on: ubuntu-latest
-
     steps:
     - name: Set up Python 3.8.0
       uses: actions/setup-python@v1
       with:
         python-version: 3.8.0
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Hello world action step
-      uses: ./hello-world-javascript-action # Uses an action in the root directory
-      id: hello
-      with:
-        who-to-greet: 'Mona the Octocat'
-      # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
-    - name: set output
-      run: echo "::set-output name=action_vehicle::spaceship"
-    - name: Publish build action
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: python ${GITHUB_WORKSPACE}/test-upload.py
     - name: Run a multi-line script
       run: |
         echo Add other actions to build, and another one,
         echo test, and deploy your project.
         echo "::set-output name=action_fruit::strawberry"
+        echo "GITHUB_WORKFLOW = ${GITHUB_WORKFLOW}"
+        echo "GITHUB_ACTION = ${GITHUB_ACTION}"
+        echo "GITHUB_ACTOR = ${GITHUB_ACTOR}"
+        echo "GITHUB_REPOSITORY = ${GITHUB_REPOSITORY}"
+        echo "GITHUB_EVENT_NAME = ${GITHUB_EVENT_NAME}"
+        echo "GITHUB_EVENT_PATH = ${GITHUB_EVENT_PATH}"
+        echo "GITHUB_SHA = ${GITHUB_SHA}"
+        echo "GITHUB_REF = ${GITHUB_REF}"
+        echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
+        echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
+    - name: Publish build action
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: python ${GITHUB_WORKSPACE}/test-upload.py
+  build_osx:
+    runs-on: macOS-latest
+    steps:
+    - name: Set up Python 3.8.0
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8.0
+    - uses: actions/checkout@v1
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build, and another one,
+        echo test, and deploy your project.
+        echo "::set-output name=action_fruit::strawberry"
+        echo "GITHUB_WORKFLOW = ${GITHUB_WORKFLOW}"
+        echo "GITHUB_ACTION = ${GITHUB_ACTION}"
+        echo "GITHUB_ACTOR = ${GITHUB_ACTOR}"
+        echo "GITHUB_REPOSITORY = ${GITHUB_REPOSITORY}"
+        echo "GITHUB_EVENT_NAME = ${GITHUB_EVENT_NAME}"
+        echo "GITHUB_EVENT_PATH = ${GITHUB_EVENT_PATH}"
+        echo "GITHUB_SHA = ${GITHUB_SHA}"
+        echo "GITHUB_REF = ${GITHUB_REF}"
+        echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
+        echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
+    - name: Publish build action
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: python ${GITHUB_WORKSPACE}/test-upload.py
+  build_client_win32:
+    runs-on: windows-latest
+    steps:
+    - name: Set up Python 3.8.0
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8.0
+    - uses: actions/checkout@v1
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build, and another one,
+        echo test, and deploy your project.
+        echo "::set-output name=action_fruit::strawberry"
+        echo "GITHUB_WORKFLOW = ${GITHUB_WORKFLOW}"
+        echo "GITHUB_ACTION = ${GITHUB_ACTION}"
+        echo "GITHUB_ACTOR = ${GITHUB_ACTOR}"
+        echo "GITHUB_REPOSITORY = ${GITHUB_REPOSITORY}"
+        echo "GITHUB_EVENT_NAME = ${GITHUB_EVENT_NAME}"
+        echo "GITHUB_EVENT_PATH = ${GITHUB_EVENT_PATH}"
+        echo "GITHUB_SHA = ${GITHUB_SHA}"
+        echo "GITHUB_REF = ${GITHUB_REF}"
+        echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
+        echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
+    - name: Publish build action
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: python ${GITHUB_WORKSPACE}/test-upload.py
