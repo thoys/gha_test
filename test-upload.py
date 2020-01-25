@@ -57,7 +57,7 @@ repository = owner_and_repository[1]
 headers = {
     "owner": owner,
     "repo": repository,
-    "commit_hash": context["event"]["sha"],
+    "commit_hash": context["event"]["pull_request"]["head"]["sha"],
     "pull_number": context["event"]["number"],
     "job_name": os.environ['JOB_NAME']
 }
