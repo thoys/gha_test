@@ -53,6 +53,8 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: python ${GITHUB_WORKSPACE}/test-upload.py
   build_osx:
+    env: 
+      JOB_NAME: build_osx
     runs-on: macOS-latest
     steps:
     - name: Set up Python 3.8.1
@@ -79,6 +81,8 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: python ${GITHUB_WORKSPACE}/test-upload.py
   build_client_win32:
+    env: 
+      JOB_NAME: build_client_win32
     runs-on: windows-latest
     steps:
     - name: Set up Python 3.8.1
