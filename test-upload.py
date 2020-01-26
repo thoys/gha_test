@@ -33,5 +33,7 @@ response = conn.getresponse()
 
 if (response.status == HTTPStatus.OK):
     print("response: ",  json.loads(response.read()))
+    exit(os.EX_OK)
 else:
     print(response.status, response.reason, response.read())
+    exit(os.EX_SOFTWARE)
