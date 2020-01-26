@@ -2,6 +2,8 @@ import os
 import json
 from hashlib import sha256
 
+FILE_READ_BUFFER = 4096
+
 temp_filename = 'temp_file.dat'
 file = open(temp_filename, 'rb')
 file_contents = file.read()

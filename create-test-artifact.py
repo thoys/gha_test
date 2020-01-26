@@ -4,7 +4,6 @@ import struct
 import random
 
 MEGABYTES_TO_BYTES = 1024 * 1024
-FILE_READ_BUFFER = 4096
 
 def generate_file(filename, sizeInMegabytes):
     f = open(filename, "wb")
