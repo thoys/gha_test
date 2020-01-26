@@ -31,9 +31,12 @@ headers = {
 conn.request("PUT", "/", body=file_contents, headers=headers)
 response = conn.getresponse()
 
+EXIT_CODE_OK = 0
+EXIT_CODE_ERROR = 1
+
 if (response.status == HTTPStatus.OK):
     print("response: ",  json.loads(response.read()))
-    exit(os.EX_OK)
+    exit(EXIT_CODE_OK)
 else:
     print(response.status, response.reason, response.read())
-    exit(os.EX_SOFTWARE)
+    exit(EXIT_CODE_ERROR)
