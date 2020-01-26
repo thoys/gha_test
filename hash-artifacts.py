@@ -13,6 +13,8 @@ file.seek(0, 0)
 for byte_block in iter(lambda: file.read(FILE_READ_BUFFER), b""):
     sha256_hash.update(byte_block)
 
+checksum = sha256_hash.hexdigest()
+
 uploading_files = []
 
 uploading_files.append({
