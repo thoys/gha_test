@@ -13,10 +13,10 @@ jobs:
       JOB_NAME: build_ubuntu
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Python 3.8.1
+    - name: Set up Python 3.8.2
       uses: actions/setup-python@v1
       with:
-        python-version: 3.8.1
+        python-version: 3.8.2
     - uses: actions/checkout@v1
     - name: Run a multi-line script
       env:
@@ -61,10 +61,10 @@ jobs:
       JOB_NAME: build_osx
     runs-on: macOS-latest
     steps:
-    - name: Set up Python 3.8.1
+    - name: Set up Python 3.8.2
       uses: actions/setup-python@v1
       with:
-        python-version: 3.8.1
+        python-version: 3.8.2
     - uses: actions/checkout@v1
     - name: Run a multi-line script
       run: |
@@ -93,10 +93,10 @@ jobs:
       JOB_NAME: build_client_win32
     runs-on: windows-latest
     steps:
-    - name: Set up Python 3.8.1
+    - name: Set up Python 3.8.2
       uses: actions/setup-python@v1
       with:
-        python-version: 3.8.1
+        python-version: 3.8.2
     - uses: actions/checkout@v1
     - name: Run a multi-line script
       run: |
