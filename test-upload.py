@@ -25,7 +25,8 @@ headers = {
     "repo": repository,
     "commit_hash": context["event"]["pull_request"]["head"]["sha"],
     "pull_number": context["event"]["number"],
-    "job_name": os.environ["JOB_NAME"]
+    "job_name": os.environ["JOB_NAME"],
+    "run_id": context["run_id"]
 }
 
 conn.request("PUT", "/", body=file_contents, headers=headers)
