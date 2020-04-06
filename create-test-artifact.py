@@ -3,6 +3,9 @@ import time
 import struct
 import random
 
+
+print("Creating test artifact.")
+
 MEGABYTES_TO_BYTES = 1024 * 1024
 
 def generate_file(filename, sizeInMegabytes):
@@ -17,3 +20,5 @@ def generate_file(filename, sizeInMegabytes):
     pass
 
 generate_file('temp_file.dat', 100)
+
+print("Test artifact created.")
