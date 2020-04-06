@@ -12,7 +12,7 @@ temp_filename = 'temp_file.dat'
 file = open(temp_filename, 'rb')
 file_contents = file.read()
 
-conn = http.client.HTTPSConnection("build-uploader.projectathena.io")
+conn = http.client.HTTPSConnection("build-uploader.vircadia.com")
 
 context = json.loads(os.environ['GITHUB_CONTEXT'])
 
