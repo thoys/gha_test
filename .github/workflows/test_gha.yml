@@ -48,13 +48,15 @@ jobs:
         echo ""
         echo "GITHUB event json:"
         cat ${GITHUB_EVENT_PATH}
+        mkdir build
     - name: Create test artifact
+      working-directory: ${{runner.workspace}}/build
       run: python ${GITHUB_WORKSPACE}/create-test-artifact.py
-    - name: Hash artifacts
-      run: python ${GITHUB_WORKSPACE}/hash-artifacts.py
     - name: Upload artifacts
+      working-directory: ${{runner.workspace}}/build
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
+        ARTIFACT_PATTERN: '*'
       run: python ${GITHUB_WORKSPACE}/test-upload.py
   build_osx:
     env: 
@@ -80,13 +82,15 @@ jobs:
         echo "GITHUB_REF = ${GITHUB_REF}"
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
+        mkdir build
     - name: Create test artifact
+      working-directory: ${{runner.workspace}}/build
       run: python ${GITHUB_WORKSPACE}/create-test-artifact.py
-    - name: Hash artifacts
-      run: python ${GITHUB_WORKSPACE}/hash-artifacts.py
     - name: Upload artifacts
+      working-directory: ${{runner.workspace}}/build
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
+        ARTIFACT_PATTERN: '*'
       run: python ${GITHUB_WORKSPACE}/test-upload.py
   build_client_win32:
     env: 
@@ -112,11 +116,13 @@ jobs:
         echo "GITHUB_REF = ${Env:GITHUB_REF}"
         echo "GITHUB_HEAD_REF = ${Env:GITHUB_HEAD_REF}"
         echo "GITHUB_BASE_REF = ${Env:GITHUB_BASE_REF}"
+        mkdir build
     - name: Create test artifact
+      working-directory: ${{runner.workspace}}/build
       run: python $Env:GITHUB_WORKSPACE/create-test-artifact.py
-    - name: Hash artifacts
-      run: python $Env:GITHUB_WORKSPACE/hash-artifacts.py
     - name: Upload artifacts
+      working-directory: ${{runner.workspace}}/build
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
+        ARTIFACT_PATTERN: '*'
       run: python $Env:GITHUB_WORKSPACE/test-upload.py

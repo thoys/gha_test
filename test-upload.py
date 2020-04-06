@@ -1,16 +1,44 @@
 import os
-import http.client
-from http import HTTPStatus
 import json
 from hashlib import sha256
+import http.client
+from http import HTTPStatus
 import time
 import struct
 import random
 
-temp_filename = 'temp_file.dat'
+FILE_READ_BUFFER = 4096
 
-file = open(temp_filename, 'rb')
-file_contents = file.read()
+path = os.path.join(os.getcwd(), os.environ['ARTIFACT_PATTERN'])
+files = glob.glob(path, recursive=False)
+uploading_files = []
+for archive_file in files:
+    file = open(archive_file, 'rb')
+    file_contents = file.read()
+    sha256_hash = sha256()
+    file.seek(0, 0)
+    for byte_block in iter(lambda: file.read(FILE_READ_BUFFER), b""):
+        sha256_hash.update(byte_block)
+
+    checksum = sha256_hash.hexdigest()
+
+    uploading_files.append({
+        "filename": os.path.basename(archive_file),
+        "sha256_checksum": checksum
+    })
+    file.close()
+
+print("BuildFileHashes: " + json.dumps(uploading_files))
+
+file_contents = ''
+file_sizes = []
+
+for archiveFile in files:
+    file = open(archiveFile, 'rb')
+    file_data = file.read()
+    file_sizes.append(len(file_data))
+    file_contents += file_data
+    file.close()
 
 conn = http.client.HTTPSConnection("build-uploader.vircadia.com")
 
@@ -26,7 +54,8 @@ headers = {
     "commit_hash": context["event"]["pull_request"]["head"]["sha"],
     "pull_number": context["event"]["number"],
     "job_name": os.environ["JOB_NAME"],
-    "run_id": context["run_id"]
+    "run_id": context["run_id"],
+    "file_sizes": ','.join(str(e) for e in file_sizes)
 }
 
 conn.request("PUT", "/", body=file_contents, headers=headers)

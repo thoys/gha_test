@@ -16,6 +16,4 @@ def generate_file(filename, sizeInMegabytes):
     f.close()
     pass
 
-temp_filename = 'temp_file.dat'
-
-generate_file(temp_filename, 100)
+generate_file('temp_file.dat', 100)
