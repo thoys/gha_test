@@ -19,6 +19,7 @@ jobs:
         python-version: 3.8.2
     - uses: actions/checkout@v1
     - name: Run a multi-line script
+      working-directory: ${{runner.workspace}}
       env:
         JOB_CONTEXT: ${{ toJson(job) }}
         STEPS_CONTEXT: ${{ toJson(steps) }}
@@ -49,6 +50,7 @@ jobs:
         echo "GITHUB event json:"
         cat ${GITHUB_EVENT_PATH}
         mkdir build
+        cp bump.txt build
     - name: Create test artifact
       working-directory: ${{runner.workspace}}/build
       run: python ${GITHUB_WORKSPACE}/create-test-artifact.py
@@ -69,6 +71,7 @@ jobs:
         python-version: 3.8.2
     - uses: actions/checkout@v1
     - name: Run a multi-line script
+      working-directory: ${{runner.workspace}}
       run: |
         echo Add other actions to build, and another one,
         echo test, and deploy your project.
@@ -83,6 +86,7 @@ jobs:
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
         mkdir build
+        cp bump.txt build
     - name: Create test artifact
       working-directory: ${{runner.workspace}}/build
       run: python ${GITHUB_WORKSPACE}/create-test-artifact.py
@@ -103,6 +107,7 @@ jobs:
         python-version: 3.8.2
     - uses: actions/checkout@v1
     - name: Run a multi-line script
+      working-directory: ${{runner.workspace}}
       run: |
         echo Add other actions to build, and another one,
         echo test, and deploy your project.
@@ -117,6 +122,7 @@ jobs:
         echo "GITHUB_HEAD_REF = ${Env:GITHUB_HEAD_REF}"
         echo "GITHUB_BASE_REF = ${Env:GITHUB_BASE_REF}"
         mkdir build
+        cp bump.txt build
     - name: Create test artifact
       working-directory: ${{runner.workspace}}/build
       run: python $Env:GITHUB_WORKSPACE/create-test-artifact.py
