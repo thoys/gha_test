@@ -19,6 +19,6 @@ def generate_file(filename, sizeInMegabytes):
     f.close()
     pass
 
-generate_file('temp_file.dat', 100)
+generate_file('temp_file.dat', 99)
 
 print("Test artifact created.")
