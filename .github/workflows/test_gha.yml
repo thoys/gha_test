@@ -50,7 +50,7 @@ jobs:
         echo "GITHUB event json:"
         cat ${GITHUB_EVENT_PATH}
         mkdir build
-        cp $Env:GITHUB_WORKSPACE/bump.txt build
+        cp ${GITHUB_WORKSPACE}/bump.txt build
     - name: Create test artifact
       working-directory: ${{runner.workspace}}/build
       run: python ${GITHUB_WORKSPACE}/create-test-artifact.py
@@ -86,7 +86,7 @@ jobs:
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
         mkdir build
-        cp $Env:GITHUB_WORKSPACE/bump.txt build
+        cp ${GITHUB_WORKSPACE}/bump.txt build
     - name: Create test artifact
       working-directory: ${{runner.workspace}}/build
       run: python ${GITHUB_WORKSPACE}/create-test-artifact.py
