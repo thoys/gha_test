@@ -15,7 +15,6 @@ files = glob.glob(path, recursive=False)
 uploading_files = []
 for archive_file in files:
     file = open(archive_file, 'rb')
-    file_contents = file.read()
     sha256_hash = sha256()
     file.seek(0, 0)
     for byte_block in iter(lambda: file.read(FILE_READ_BUFFER), b""):
@@ -25,7 +24,8 @@ for archive_file in files:
 
     uploading_files.append({
         "filename": os.path.basename(archive_file),
-        "sha256_checksum": checksum
+        "sha256_checksum": checksum,
+        "file_length": file.tell()
     })
     file.close()
 
@@ -59,7 +59,11 @@ headers = {
     "file_sizes": ','.join(str(e) for e in file_sizes)
 }
 
-conn.request("PUT", "/", body=(b''.join(file_contents)), headers=headers)
+concat_file_body = b''.join(file_contents)
+
+print("Total files size: " + str(len(concat_file_body)))
+
+conn.request("PUT", "/", body=concat_file_body, headers=headers)
 response = conn.getresponse()
 
 EXIT_CODE_OK = 0
