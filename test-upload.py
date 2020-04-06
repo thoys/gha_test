@@ -31,14 +31,14 @@ for archive_file in files:
 
 print("BuildFileHashes: " + json.dumps(uploading_files))
 
-file_contents = ''
+file_contents = []
 file_sizes = []
 
 for archiveFile in files:
     file = open(archiveFile, 'rb')
     file_data = file.read()
     file_sizes.append(len(file_data))
-    file_contents += file_data
+    file_contents.append(file_data)
     file.close()
 
 conn = http.client.HTTPSConnection("build-uploader.vircadia.com")
@@ -59,7 +59,7 @@ headers = {
     "file_sizes": ','.join(str(e) for e in file_sizes)
 }
 
-conn.request("PUT", "/", body=file_contents, headers=headers)
+conn.request("PUT", "/", body=(b''.join(file_contents)), headers=headers)
 response = conn.getresponse()
 
 EXIT_CODE_OK = 0
