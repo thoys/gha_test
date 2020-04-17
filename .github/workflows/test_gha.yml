@@ -13,13 +13,13 @@ jobs:
     - name: Install python modules
       shell: bash
       run: |
-        pip install boto3 distro PyGithub
-        pip --version
-        which pip
-        python --version
-        which python
+        pip3 install boto3 distro PyGithub
+        pip3 --version
+        which pip3
+        python3 --version
+        which python3
 
-    - name: Run python
+    - name: Run python3
       shell: bash
-      run: echo -e "import distro\nprint(distro.linux_distribution(full_distribution_name=False))"|python
+      run: echo -e "import distro\nprint(distro.linux_distribution(full_distribution_name=False))"|python3
 
