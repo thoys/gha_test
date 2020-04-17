@@ -9,6 +9,7 @@ jobs:
     env: 
       JOB_NAME: build_ubuntu
     runs-on: ubuntu-latest
+    steps:
     - name: Install python modules
       shell: bash
       run: pip install boto3 distro PyGithub
