@@ -4,131 +4,23 @@ on:
  pull_request:
   types: [opened, synchronize, reopened, labeled]
 
-env:
-  RELEASE_NUMBER: ${{ github.event.number }}
-
 jobs:
   build_ubuntu:
     env: 
       JOB_NAME: build_ubuntu
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Python 3.8.2
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8.2
-    - uses: actions/checkout@v1
-    - name: Run a multi-line script
-      working-directory: ${{runner.workspace}}
-      env:
-        JOB_CONTEXT: ${{ toJson(job) }}
-        STEPS_CONTEXT: ${{ toJson(steps) }}
-        RUNNER_CONTEXT: ${{ toJson(runner) }}
-        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+    - name: Install python modules
+      shell: bash
+      run: |
+        sudo apt install -y python3-setuptools
+        pip3 install boto3 distro PyGithub
+        pip3 --version
+        which pip3
+        python3 --version
+        which python3
 
-      run: |
-        echo Add other actions to build, and another one,
-        echo test, and deploy your project.
-        echo "GITHUB_WORKFLOW = ${GITHUB_WORKFLOW}"
-        echo "GITHUB_ACTION = ${GITHUB_ACTION}"
-        echo "GITHUB_ACTOR = ${GITHUB_ACTOR}"
-        echo "GITHUB_REPOSITORY = ${GITHUB_REPOSITORY}"
-        echo "GITHUB_EVENT_NAME = ${GITHUB_EVENT_NAME}"
-        echo "GITHUB_EVENT_PATH = ${GITHUB_EVENT_PATH}"
-        echo "GITHUB_SHA = ${GITHUB_SHA}"
-        echo "GITHUB_REF = ${GITHUB_REF}"
-        echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
-        echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
-        echo "JOB_CONTEXT = ${JOB_CONTEXT}"
-        echo "STEPS_CONTEXT = ${STEPS_CONTEXT}"
-        echo "RUNNER_CONTEXT = ${RUNNER_CONTEXT}"
-        echo "STRATEGY_CONTEXT = ${STRATEGY_CONTEXT}"
-        echo "JOB_NAME = ${JOB_NAME}"
-        echo "MATRIX_CONTEXT = ${MATRIX_CONTEXT}"
-        echo ""
-        echo "GITHUB event json:"
-        cat ${GITHUB_EVENT_PATH}
-        mkdir build
-        cp ${GITHUB_WORKSPACE}/bump.txt build
-    - name: Create test artifact
-      working-directory: ${{runner.workspace}}/build
-      run: python ${GITHUB_WORKSPACE}/create-test-artifact.py
-    - name: Upload artifacts
-      working-directory: ${{runner.workspace}}/build
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-        ARTIFACT_PATTERN: '*'
-      run: python ${GITHUB_WORKSPACE}/test-upload.py
-  build_osx:
-    env: 
-      JOB_NAME: build_osx
-    runs-on: macOS-latest
-    steps:
-    - name: Set up Python 3.8.2
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8.2
-    - uses: actions/checkout@v1
-    - name: Run a multi-line script
-      working-directory: ${{runner.workspace}}
-      run: |
-        echo Add other actions to build, and another one,
-        echo test, and deploy your project.
-        echo "GITHUB_WORKFLOW = ${GITHUB_WORKFLOW}"
-        echo "GITHUB_ACTION = ${GITHUB_ACTION}"
-        echo "GITHUB_ACTOR = ${GITHUB_ACTOR}"
-        echo "GITHUB_REPOSITORY = ${GITHUB_REPOSITORY}"
-        echo "GITHUB_EVENT_NAME = ${GITHUB_EVENT_NAME}"
-        echo "GITHUB_EVENT_PATH = ${GITHUB_EVENT_PATH}"
-        echo "GITHUB_SHA = ${GITHUB_SHA}"
-        echo "GITHUB_REF = ${GITHUB_REF}"
-        echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
-        echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
-        mkdir build
-        cp ${GITHUB_WORKSPACE}/bump.txt build
-    - name: Create test artifact
-      working-directory: ${{runner.workspace}}/build
-      run: python ${GITHUB_WORKSPACE}/create-test-artifact.py
-    - name: Upload artifacts
-      working-directory: ${{runner.workspace}}/build
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-        ARTIFACT_PATTERN: '*'
-      run: python ${GITHUB_WORKSPACE}/test-upload.py
-  build_client_win32:
-    env: 
-      JOB_NAME: build_client_win32
-    runs-on: windows-latest
-    steps:
-    - name: Set up Python 3.8.2
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8.2
-    - uses: actions/checkout@v1
-    - name: Run a multi-line script
-      working-directory: ${{runner.workspace}}
-      run: |
-        echo Add other actions to build, and another one,
-        echo test, and deploy your project.
-        echo "GITHUB_WORKFLOW = ${Env:GITHUB_WORKFLOW}"
-        echo "GITHUB_ACTION = ${Env:GITHUB_ACTION}"
-        echo "GITHUB_ACTOR = ${Env:GITHUB_ACTOR}"
-        echo "GITHUB_REPOSITORY = ${Env:GITHUB_REPOSITORY}"
-        echo "GITHUB_EVENT_NAME = ${Env:GITHUB_EVENT_NAME}"
-        echo "GITHUB_EVENT_PATH = ${Env:GITHUB_EVENT_PATH}"
-        echo "GITHUB_SHA = ${Env:GITHUB_SHA}"
-        echo "GITHUB_REF = ${Env:GITHUB_REF}"
-        echo "GITHUB_HEAD_REF = ${Env:GITHUB_HEAD_REF}"
-        echo "GITHUB_BASE_REF = ${Env:GITHUB_BASE_REF}"
-        mkdir build
-        cp $Env:GITHUB_WORKSPACE/bump.txt build
-    - name: Create test artifact
-      working-directory: ${{runner.workspace}}/build
-      run: python $Env:GITHUB_WORKSPACE/create-test-artifact.py
-    - name: Upload artifacts
-      working-directory: ${{runner.workspace}}/build
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-        ARTIFACT_PATTERN: '*'
-      run: python $Env:GITHUB_WORKSPACE/test-upload.py
+    - name: Run python3
+      shell: bash
+      run: echo -e "import distro\nprint(distro.linux_distribution(full_distribution_name=False))"|python3
+
