@@ -13,6 +13,7 @@ jobs:
     - name: Install python modules
       shell: bash
       run: |
+        sudo apt install -y python3-setuptools
         pip3 install boto3 distro PyGithub
         pip3 --version
         which pip3
