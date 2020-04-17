@@ -15,5 +15,5 @@ jobs:
       run: pip install boto3 distro PyGithub
     - name: Run python
       shell: bash
-      run: echo -e "import distro\ndistro.linux_distribution(full_distribution_name=False)"|python
+      run: echo -e "import distro\nprint(distro.linux_distribution(full_distribution_name=False))"|python
 
